@@ -1,6 +1,6 @@
-# Pontera Infrastructure Deployment
+# Infrastructure Deployment
 
-This project automates the deployment of infrastructure for Pontera using Terraform and Kubernetes.
+This project automates the deployment of infrastructure using Terraform and Kubernetes.
 
 ## Overview
 

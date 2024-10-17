@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: aws-cli-sa
+  namespace: default
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aws-cli-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aws-cli
+  template:
+    metadata:
+      labels:
+        app: aws-cli
+    spec:
+      serviceAccountName: aws-cli-sa
+      containers:
+        - name: aws-cli
+          image: amazon/aws-cli:latest
+          command: ["sleep", "3600"]  
+          env:
+            - name: AWS_REGION
+              value: "us-east-2"
+            - name: AWS_ACCOUNT_ID
+              value: "123456789012"
+            - name: SECRET_NAME
+              value: "my-secret"
+          volumeMounts:
+            - name: aws-secret
+              mountPath: /secrets
+      volumes:
+        - name: aws-secret
+          secret:
+            secretName: my-secret 
